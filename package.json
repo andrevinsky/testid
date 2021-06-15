@@ -1,0 +1,27 @@
+{
+  "name": "testid",
+  "version": "1.0.0",
+  "description": "testid support: props and selectors generator",
+  "main": "dist/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrevinsky/testid.git"
+  },
+  "keywords": [
+    "testid",
+    "react",
+    "puppeteer",
+    "selector",
+    "e2e"
+  ],
+  "author": "Andrew Revinsky <arevinsky+github@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrevinsky/testid/issues"
+  },
+  "homepage": "https://github.com/andrevinsky/testid#readme"
+}
