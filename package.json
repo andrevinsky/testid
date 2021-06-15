@@ -1,6 +1,6 @@
 {
   "name": "testid-support",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "testid support: props and selectors generator",
   "main": "dist/index.js",
   "module": "src/index.js",
