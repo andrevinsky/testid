@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/testid
+    steps:
+      - checkout
+      - run:
+          name: Install Node v12.22.1
+          command: |
+            . ./.circleci/load-nvm.sh
+            nvm install v12.22.1
+            nvm alias default v12.22.1
+#      - run:
+#          name: Install dependencies
+#          command: |
+#            sudo apt-get update
+#            sudo apt-get install -y libgbm-dev
+      - run:
+          command: |
+            . ./.circleci/load-nvm.sh
+            export CI_ARTIFACTS_PATH=~/testid/ci-artifacts
+            export JEST_JUNIT_OUTPUT_DIR_PARENT=~/testid/reports
+            ./build-and-test-all.sh
+
+      - store_test_results:
+          path: ~/testid/reports
+      - store_artifacts:
+          path: ~/testid/ci-artifacts

@@ -4,6 +4,14 @@ export const FOR_TEST_SVG = 'testSvg';
 export const FOR_RENDER_SVG = 'renderSvg';
 
 /**
+ * @typedef {*} T
+ */
+
+/**
+ * @typedef {*} P
+ */
+
+/**
  *
  * @param arr {Array<string|empty>}
  * @return Array<string>
