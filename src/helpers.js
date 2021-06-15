@@ -151,7 +151,7 @@ export class CssSel {
    *
    * @param { string } attrName
    * @param { string|number } [attrValue]
-   * @param { string } [attrCf]
+   * @param { '^'|'!' } [attrCf]
    * @return {CssSel}
    */
   attr(attrName, attrValue, attrCf) {
@@ -161,6 +161,7 @@ export class CssSel {
     if (attrCf == null) {
       return new CssSel(`[${ attrName }="${ String(attrValue).replace('"', '\\"') }"]`, this, '');
     }
+    return new CssSel(`[${ attrName }${ attrCf }="${ String(attrValue).replace('"', '\\"') }"]`, this, '');
   }
 
   or(val) {

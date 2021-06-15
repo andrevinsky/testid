@@ -5,8 +5,9 @@
   "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
-    "test": "$(npm bin)/jest --watchAll=false --bail --runInBand --reporters=default --reporters=jest-junit --collectCoverage=true --coverageDirectory=$JEST_COVERAGE_OUTPUT_DIR --unhandled-rejections=strict --verbose",
+    "test": "JEST_COVERAGE_OUTPUT_DIR=coverage $(npm bin)/jest --watchAll=false --bail --runInBand --reporters=default --reporters=jest-junit --collectCoverage=true --coverageDirectory=$JEST_COVERAGE_OUTPUT_DIR --unhandled-rejections=strict --verbose src",
     "build": "$(npm bin)/babel src -d dist",
+    "types": "./emit-types.sh",
     "prepublish": "$(npm bin)/babel src -d dist"
   },
   "repository": {

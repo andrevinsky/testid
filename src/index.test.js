@@ -9,7 +9,7 @@ import {
 } from './helpers';
 import { FOR_RENDER, FOR_TESTS, } from './index';
 
-describe(`src/shared/e2e/helpers.js`, () => {
+describe(`testid-support`, () => {
   describe(`pickHeadUntilNullish(arr:Array<string|empty>):Array<string>`, () => {
     [
       [ [], [], 'No args' ],
@@ -23,6 +23,8 @@ describe(`src/shared/e2e/helpers.js`, () => {
         expect(pickHeadUntilNullish(args)).toEqual(expected);
       }));
   });
+
+  describe.skip(`applyForEachPair(obj, fn)`, () => {});
 
   describe(`prepareTestId(role, roleSpecifics, personalization):{function(arg:string): *}`, () => {
     [
@@ -114,17 +116,50 @@ describe(`src/shared/e2e/helpers.js`, () => {
   });
 
   describe(`cssSel(*)`, () => {
-    [
-      [ '*', null, '*', 'Any tag' ],
-      [ '.class1', null, '.class1', 'A class name as a starter' ],
-      [ '.class1', inst => ('*' + inst), '*.class1', 'Concatenating to a string, testing valueOf()' ],
-      [ '.class1', inst => inst.desc('.class2'), '.class1 .class2', 'one descendant' ],
-      [ '.class1', inst => inst.desc('.class2').desc('.class3'), '.class1 .class2 .class3', 'two descendants' ],
-      [ '.class1', inst => inst.attr('disabled'), '.class1[disabled]', 'attribute presence' ],
-      [ '.class1', inst => inst.attr('title', 3), '.class1[title="3"]', 'attribute equality to a given value' ],
-    ].filter(Boolean).map(([ firstArg, tf, expected, msg ], idx) =>
-      test(`#${ 1 + idx }. ${ msg } `, () => {
-        expect(String(tf ? tf(cssSel(firstArg)) : cssSel(firstArg))).toEqual(expected);
-      }));
+    describe(`constructor`, () => {
+      [
+        [ '*', null, '*', 'Any tag' ],
+        [ '.class1', null, '.class1', 'A class name as a starter' ],
+        [ '.class1', inst => ('*' + inst), '*.class1', 'Concatenating to a string, testing valueOf()' ],
+        [ '.class1', inst => inst.desc('.class2'), '.class1 .class2', 'one descendant' ],
+        [ '.class1', inst => inst.desc('.class2').desc('.class3'), '.class1 .class2 .class3', 'two descendants' ],
+        [ '.class1', inst => inst.attr('disabled'), '.class1[disabled]', 'attribute presence' ],
+        [ '.class1', inst => inst.attr('title', 3), '.class1[title="3"]', 'attribute equality to a given value' ],
+      ].filter(Boolean).map(([ firstArg, tf, expected, msg ], idx) =>
+        test(`#${ 1 + idx }. ${ msg } `, () => {
+          expect(String(tf ? tf(cssSel(firstArg)) : cssSel(firstArg))).toEqual(expected);
+        }));
+    });
+
+    describe(`relationship methods`, () => {
+      [
+        [ sel => sel.mod('.class'), '*.class', 'modification of the same node' ],
+        [ sel => sel.mod('.class1').mod('.class2'), '*.class1.class2', 'modification of the same node (twice)' ],
+        [ sel => sel.mod('.class1').or('.class2'), '*.class1,.class2', 'modification of the same node or another selector' ],
+        [ sel => sel.mod('.class1').second(), '*.class1 ~ *.class1', 'second of such selector' ],
+        [ sel => sel.mod('.class1').third(), '*.class1 ~ *.class1 ~ *.class1', 'third of such selector' ],
+        [ sel => sel.attr('title'), '*[title]', 'attribute of the same node' ],
+        [ sel => sel.attr('title', 'titleName'), '*[title="titleName"]', 'attribute with the value of the same node' ],
+        [ sel => sel.attr('title', 'titleName', '^'), '*[title^="titleName"]', 'attribute with the value (^=) of the same node' ],
+        [ sel => sel.mod('.class1').mod('.class2'), '*.class1.class2', 'modification of the same node (twice)' ],
+        [ sel => sel.desc('.class'), '* .class', 'descendant of the node' ],
+        [ sel => sel.desc('.class1').desc('.class2'), '* .class1 .class2', 'descendant of descendant of the node' ],
+        [ sel => sel.child('.class'), '*>.class', 'child of the node' ],
+        [ sel => sel.child('.class1').child('.class2'), '*>.class1>.class2', 'child of child of the node' ],
+      ].filter(Boolean).map(([ tf, expected, msg ], idx) =>
+        test(`#${ 1 + idx }. ${ msg } `, () => {
+          expect(String(tf(cssSel('*')))).toEqual(expected);
+        }));
+    });
+
+    describe(`store() and get()`, () => {
+      const selector = cssSel('*').desc('.class1');
+      const expectedValue = String(selector);
+
+      test(`Proof of concept`, () => {
+        expect(String(selector.store().desc('.class2').get(0))).toEqual(expectedValue);
+      });
+    });
+
   });
 });

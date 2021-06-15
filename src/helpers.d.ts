@@ -1,4 +1,10 @@
 /**
+ * @typedef {*} T
+ */
+/**
+ * @typedef {*} P
+ */
+/**
  *
  * @param arr {Array<string|empty>}
  * @return Array<string>
@@ -9,13 +15,13 @@ export function pickHeadUntilNullish(arr: Array<string | any>): any;
  * @param {...string} args
  * @return {function(string): T}
  */
-export function prepareTestId(...args: string[]): (arg0: string) => any;
+export function prepareTestId(...args: string[]): (arg0: string) => T;
 /**
  *
  * @param {...string} args
  * @return {function(function(string):P): function(...string): P}
  */
-export function prepareTestIdOpen(...args: string[]): (arg0: (arg0: string) => any) => (...args: string[]) => any;
+export function prepareTestIdOpen(...args: string[]): (arg0: (arg0: string) => P) => (...args: string[]) => P;
 /**
  *
  * @param sel {string}
@@ -37,17 +43,17 @@ export function e2eSelector(sel: string): string;
  * @return {Object<string, T>}
  */
 export function applyForEachPair(obj: {
-    [x: string]: (arg0: any) => (arg0: any) => any;
-}, fn: (arg0: any) => any): {
-    [x: string]: any;
+    [x: string]: (arg0: any) => (arg0: any) => T;
+}, fn: (arg0: any) => T): {
+    [x: string]: T;
 };
 export const FOR_TESTS: "test";
 export const FOR_RENDER: "render";
 export const FOR_TEST_SVG: "testSvg";
 export const FOR_RENDER_SVG: "renderSvg";
-export function defineTestIdDictionary(cb: (arg0: (...args: string[]) => (arg0: any, arg1: string) => any, arg1: ((...args: string[]) => (arg0: (arg0: string) => any) => (...args: string[]) => any) | null) => any): (arg0: 'test' | 'render') => {
-    [x: string]: any | any;
-} | any | any;
+export function defineTestIdDictionary(cb: (arg0: (...args: string[]) => (arg0: any, arg1: string) => T, arg1: ((...args: string[]) => (arg0: (arg0: string) => P) => (...args: string[]) => P) | null) => any): (arg0: 'test' | 'render') => {
+    [x: string]: T | P;
+} | T | P;
 export function cssSel(val: any): CssSel;
 export class CssSel {
     /**
@@ -94,3 +100,5 @@ export class CssSel {
     toString(): any;
     valueOf(): any;
 }
+export type T = any;
+export type P = any;

@@ -6,6 +6,7 @@ module.exports = {
     [ '@babel/preset-env',
       {
         "useBuiltIns": "entry",
+        "modules": "cjs",
         targets: {
           node: 'current',
         },
@@ -14,10 +15,17 @@ module.exports = {
   ],
   "env": {
     "test": {
-      "plugins": ["@babel/plugin-transform-modules-commonjs"]
-    },
-    "development": {
-      "plugins": ["@babel/plugin-transform-modules-commonjs"]
+      "presets": [
+        [ '@babel/preset-env',
+          {
+            "useBuiltIns": "entry",
+            "modules": "auto",
+            targets: {
+              node: 'current',
+            },
+          },
+        ],
+      ]
     }
   },
 };
