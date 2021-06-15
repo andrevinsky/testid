@@ -1,12 +1,13 @@
 {
-  "name": "testid",
+  "name": "testid-support",
   "version": "1.0.0",
   "description": "testid support: props and selectors generator",
   "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
     "test": "$(npm bin)/jest",
-    "build": "$(npm bin)/babel src -d dist"
+    "build": "$(npm bin)/babel src -d dist",
+    "prepublish": "$(npm bin)/babel src -d dist"
   },
   "repository": {
     "type": "git",
