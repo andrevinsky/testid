@@ -54,3 +54,4 @@ dist
 .idea
 build-and-test-all.sh
 ensure-variables-and-paths.sh
+junit.xml

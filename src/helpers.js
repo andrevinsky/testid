@@ -55,30 +55,60 @@ function produceTestIdAttrValue(args) {
 
 /**
  *
- * @param sel {string}
- * @return {{'data-testid'}}
+ * @param attr
+ * @return {function(*=): {'data-testid': *}}
  */
-export function e2eAttr(sel) {
-  return ({ 'data-testid': sel });
+export function makeE2eAttr(attr) {
+  /**
+   *
+   * @param sel {string}
+   * @return {{'data-testid'}}
+   */
+  return function e2eAttr(sel) {
+    return ({ [ attr ]: sel });
+  };
 }
+
+export const e2eAttr = makeE2eAttr('data-testid');
+
 
 /**
  *
- * @param sel {string}
+ * @param attr
+ * @return {(function(*=): (string))|*}
+ */
+export function makeE2eSelector(attr) {
+  /**
+   *
+   * @param sel {string}
+   * @return {string}
+   */
+  return function e2eSelector(sel) {
+    if (sel) {
+      return `[${ attr }^="${ escapeDQuote(sel) }"]`;
+    }
+    return `[${ attr }=""]`;
+  };
+}
+
+export const e2eSelector = makeE2eSelector('data-testid');
+
+// https://gist.github.com/getify/3667624
+/**
+ *
+ * @param str
  * @return {string}
  */
-export function e2eSelector(sel) {
-  if (sel) {
-    return `[data-testid^="${ sel }"]`;
-  }
-  return '[data-testid=""]';
+export function escapeDQuote(str) {
+  return (String(str) || '').replace(/\\([\s\S])|(")/g, '\\$1$2');
 }
+
 
 const implMap = {
   [ FOR_TESTS ]: e2eSelector,
   [ FOR_RENDER ]: e2eAttr,
-  [ FOR_TEST_SVG ]: null,
-  [ FOR_RENDER_SVG ]: null
+  [ FOR_TEST_SVG ]: makeE2eSelector('aria-label'),
+  [ FOR_RENDER_SVG ]: makeE2eAttr('aria-label')
 };
 
 /**

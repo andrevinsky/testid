@@ -18,11 +18,8 @@ module.exports = {
       "presets": [
         [ '@babel/preset-env',
           {
-            "useBuiltIns": "entry",
             "modules": "auto",
-            targets: {
-              node: 'current',
-            },
+
           },
         ],
       ]

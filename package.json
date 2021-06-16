@@ -2,10 +2,11 @@
   "name": "testid-support",
   "version": "1.0.4",
   "description": "testid support: props and selectors generator",
-  "main": "dist/index.js",
-  "module": "src/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "index.js",
   "scripts": {
     "test": "JEST_COVERAGE_OUTPUT_DIR=coverage $(npm bin)/jest --watchAll=false --bail --runInBand --reporters=default --reporters=jest-junit --collectCoverage=true --coverageDirectory=$JEST_COVERAGE_OUTPUT_DIR --unhandled-rejections=strict --verbose src",
+    "test:dev": "$(npm bin)/jest --watchAll=true --reporters=default --unhandled-rejections=strict --verbose src",
     "build": "$(npm bin)/babel src -d dist",
     "types": "./emit-types.sh",
     "prepublish": "$(npm bin)/babel src -d dist"
