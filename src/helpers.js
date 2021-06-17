@@ -264,7 +264,7 @@ export function appendSelector(source, ...args) {
     const result = escapeDQuote(produceTestIdAttrValue(args));
     if (result) {
       return source.replace(/=""]$/g, `^="${ escapeDQuote(result) }"]`);
-    } else { return  source; }
+    } else { return source; }
   }
   return source.replace(/"]$/, escapeDQuote(produceTestIdAttrValue(args)) + '"]').replace(/(\|){2,}/g, '|');
 }
@@ -272,10 +272,14 @@ export function appendSelector(source, ...args) {
 /**
  *
  * @param {Object<string,string>} source
+ * @param {string|null} attrName
  * @param {...(number|string|null|void)} args
  * @returns {Object<string,string>}
  */
-export function appendAttrValue(source, ...args) {
-  return Object.fromEntries(Array.from(Object.entries(source), ([k, v]) =>
-    ([ k, `${ v }${ escapeDQuote(produceTestIdAttrValue(args)) }`])));
+export function appendAttrValue(source, attrName, ...args) {
+  return Object.fromEntries(
+    Array.from(Object.entries(source))
+      .filter(([ k ]) => (attrName ? (attrName === k) : (k === 'data-testid')))
+      .map(([ k, v ]) =>
+        ([ k, `${ v }${ escapeDQuote(produceTestIdAttrValue(args)) }` ])));
 }

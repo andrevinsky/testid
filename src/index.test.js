@@ -209,7 +209,7 @@ describe(`testid-support`, () => {
       [ { 'data-testid': '' } , [ null, 'modal', 'alert' ], { 'data-testid': '' }, 'three args with null at the start' ],
     ].filter(Boolean).map(([ source, args, expected, msg ], idx) =>
       test(`#${ 1 + idx }. ${ msg } `, () => {
-        expect(appendAttrValue(source, ...args)).toEqual(expected);
+        expect(appendAttrValue(source, null, ...args)).toEqual(expected);
       }));
   });
 });
