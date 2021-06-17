@@ -1,4 +1,6 @@
 import {
+  appendAttrValue,
+  appendSelector,
   cssSel,
   defineTestIdDictionary,
   e2eAttr,
@@ -11,6 +13,7 @@ import {
 import { FOR_RENDER, FOR_TESTS, } from './index';
 
 describe(`testid-support`, () => {
+
   describe(`pickHeadUntilNullish(arr:Array<string|empty>):Array<string>`, () => {
     [
       [ [], [], 'No args' ],
@@ -173,6 +176,40 @@ describe(`testid-support`, () => {
       test(`#${ 1 + idx }. ${ msg } `, () => {
         const K = arg => arg;
         expect(selectorTailToArgs(prepareTestId(...selArgs)(K), ...headArgs)).toEqual(expected);
+      }));
+  });
+
+  describe(`appendSelector(source, ...args)`, () => {
+    [
+      [ '[data-testid=""]', [], '[data-testid=""]' ],
+      [ '[data-testid=""]', [ 'modal' ], '[data-testid^="modal|"]' ],
+      [ '[data-testid=""]', [ 'modal', 'alert' ], '[data-testid^="modal|alert|"]' ],
+      [ '[data-testid=""]', [ 'modal', 'alert', null ], '[data-testid^="modal|alert|"]' ],
+      [ '[data-testid=""]', [ 'modal', null, 'alert' ], '[data-testid^="modal|"]' ],
+      [ '[data-testid=""]', [ null, 'modal', 'alert' ], '[data-testid=""]' ],
+      [ '[data-testid^="modal|"]', [ ], '[data-testid^="modal|"]' ],
+      [ '[data-testid^="modal|"]', [ '' ], '[data-testid^="modal|"]' ],
+      [ '[data-testid^="modal|"]', [ 'modal' ], '[data-testid^="modal|modal|"]' ],
+      [ '[data-testid^="modal|"]', [ 'alert' ], '[data-testid^="modal|alert|"]' ],
+      [ '[data-testid^="modal|"]', [ 'alert', 1 ], '[data-testid^="modal|alert|1|"]' ],
+
+    ].filter(Boolean).map(([ source, args, expected, msg ], idx) =>
+      test(`#${ 1 + idx }. Appending selector '${ source }' with ${ JSON.stringify(args) } makes '${ expected }'`, () => {
+        expect(appendSelector(source, ...args)).toEqual(expected);
+      }));
+  });
+
+  describe(`appendAttrValue(source, ...args)`, () => {
+    [
+      [ { 'data-testid': '' } , [], { 'data-testid': '' }, 'empty' ],
+      [ { 'data-testid': '' } , [ 'modal' ], { 'data-testid': 'modal|' }, 'single arg' ],
+      [ { 'data-testid': '' } , [ 'modal', 'alert' ], { 'data-testid': 'modal|alert|' }, 'two args' ],
+      [ { 'data-testid': '' } , [ 'modal', 'alert', null ], { 'data-testid': 'modal|alert|' }, 'three args with null in the end' ],
+      [ { 'data-testid': '' } , [ 'modal', null, 'alert' ], { 'data-testid': 'modal|' }, 'three args with null in the middle' ],
+      [ { 'data-testid': '' } , [ null, 'modal', 'alert' ], { 'data-testid': '' }, 'three args with null at the start' ],
+    ].filter(Boolean).map(([ source, args, expected, msg ], idx) =>
+      test(`#${ 1 + idx }. ${ msg } `, () => {
+        expect(appendAttrValue(source, ...args)).toEqual(expected);
       }));
   });
 });

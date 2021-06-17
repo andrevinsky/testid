@@ -62,7 +62,7 @@ export function makeE2eAttr(attr) {
   /**
    *
    * @param sel {string}
-   * @return {{'data-testid'}}
+   * @return {Object<string,string>}
    */
   return function e2eAttr(sel) {
     return ({ [ attr ]: sel });
@@ -251,4 +251,31 @@ export function selectorTailToArgs(sel, ...headArgs) {
     }
   }
   return [];
+}
+
+/**
+ *
+ * @param source
+ * @param args
+ * @returns {*}
+ */
+export function appendSelector(source, ...args) {
+  if (/=""]$/.test(source)) {
+    const result = escapeDQuote(produceTestIdAttrValue(args));
+    if (result) {
+      return source.replace(/=""]$/g, `^="${ escapeDQuote(result) }"]`);
+    } else { return  source; }
+  }
+  return source.replace(/"]$/, escapeDQuote(produceTestIdAttrValue(args)) + '"]').replace(/(\|){2,}/g, '|');
+}
+
+/**
+ *
+ * @param {Object<string,string>} source
+ * @param {...(number|string|null|void)} args
+ * @returns {Object<string,string>}
+ */
+export function appendAttrValue(source, ...args) {
+  return Object.fromEntries(Array.from(Object.entries(source), ([k, v]) =>
+    ([ k, `${ v }${ escapeDQuote(produceTestIdAttrValue(args)) }`])));
 }

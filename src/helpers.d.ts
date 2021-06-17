@@ -60,6 +60,24 @@ export function applyForEachPair(obj: {
  * @return {Array<string>}
  */
 export function selectorTailToArgs(sel: string, ...headArgs: (string | number)[]): Array<string>;
+/**
+ *
+ * @param source
+ * @param args
+ * @returns {*}
+ */
+export function appendSelector(source: any, ...args: any[]): any;
+/**
+ *
+ * @param {Object<string,string>} source
+ * @param {...(number|string|null|void)} args
+ * @returns {Object<string,string>}
+ */
+export function appendAttrValue(source: {
+    [x: string]: string;
+}, ...args: (number | string | null | void)[]): {
+    [x: string]: string;
+};
 export const FOR_TESTS: "test";
 export const FOR_RENDER: "render";
 export const FOR_TEST_SVG: "testSvg";

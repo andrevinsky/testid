@@ -6,6 +6,8 @@ import { FOR_RENDER_SVG } from "./helpers";
 import { defineTestIdDictionary } from "./helpers";
 import { cssSel } from "./helpers";
 import { selectorTailToArgs } from "./helpers";
+import { appendSelector } from "./helpers";
+import { appendAttrValue } from "./helpers";
 declare const defaultExport: ((cb: (arg0: (...arg0: string[]) => (arg0: any, arg1: string) => any, arg1: (...arg0: string[]) => (arg0: (arg0: string) => any) => (...arg0: string[]) => any) => any) => (arg0: "test" | "render") => any) & {
     FOR_RENDER: string;
     FOR_TESTS: string;
@@ -14,4 +16,4 @@ declare const defaultExport: ((cb: (arg0: (...arg0: string[]) => (arg0: any, arg
     cssSel: (val: any) => import("./helpers").CssSel;
     selectorTailToArgs: typeof selectorTailToArgs;
 };
-export { FOR_RENDER, FOR_TESTS, FOR_TEST_SVG, FOR_RENDER_SVG, defineTestIdDictionary, cssSel, selectorTailToArgs };
+export { FOR_RENDER, FOR_TESTS, FOR_TEST_SVG, FOR_RENDER_SVG, defineTestIdDictionary, cssSel, selectorTailToArgs, appendSelector, appendAttrValue };

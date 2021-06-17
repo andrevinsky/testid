@@ -17,6 +17,7 @@
   },
   "keywords": [
     "testid",
+    "data-testid",
     "react",
     "puppeteer",
     "selector",
