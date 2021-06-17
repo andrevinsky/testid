@@ -12,16 +12,16 @@
 export function pickHeadUntilNullish(arr: Array<string | any>): any;
 /**
  *
- * @param {...string} args
+ * @param {...(string|number)} args
  * @return {function(string): T}
  */
-export function prepareTestId(...args: string[]): (arg0: string) => T;
+export function prepareTestId(...args: (string | number)[]): (arg0: string) => T;
 /**
  *
- * @param {...string} args
- * @return {function(function(string):P): function(...string): P}
+ * @param {...(string|number)} args
+ * @return {function(function(string):P): function(...(string|number)): P}
  */
-export function prepareTestIdOpen(...args: string[]): (arg0: (arg0: string) => P) => (...args: string[]) => P;
+export function prepareTestIdOpen(...args: (string | number)[]): (arg0: (arg0: string) => P) => (...args: (string | number)[]) => P;
 /**
  *
  * @param attr
@@ -53,6 +53,13 @@ export function applyForEachPair(obj: {
 }, fn: (arg0: any) => T): {
     [x: string]: T;
 };
+/**
+ *
+ * @param { string } sel
+ * @param {...(string|number)} headArgs
+ * @return {Array<string>}
+ */
+export function selectorTailToArgs(sel: string, ...headArgs: (string | number)[]): Array<string>;
 export const FOR_TESTS: "test";
 export const FOR_RENDER: "render";
 export const FOR_TEST_SVG: "testSvg";

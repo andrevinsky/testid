@@ -5,7 +5,8 @@ import {
   e2eSelector,
   pickHeadUntilNullish,
   prepareTestId,
-  prepareTestIdOpen
+  prepareTestIdOpen,
+  selectorTailToArgs
 } from './helpers';
 import { FOR_RENDER, FOR_TESTS, } from './index';
 
@@ -161,5 +162,17 @@ describe(`testid-support`, () => {
       });
     });
 
+  });
+
+  describe(`selectorTailToArgs(sel, ...headArgs)`, () => {
+    [
+      [ [], [], [], 'empty' ],
+      [ [ 'modal', 'alert', 'success' ], [ 'modal', 'alert', 'success' ], [], '3 of 3 -> 0' ],
+      [ [ 'modal', 'alert', 'success' ], [ 'modal', 'alert' ], [ 'success' ], '2 of 3 -> 1' ],
+    ].filter(Boolean).map(([ selArgs, headArgs, expected, msg ], idx) =>
+      test(`#${ 1 + idx }. ${ msg } `, () => {
+        const K = arg => arg;
+        expect(selectorTailToArgs(prepareTestId(...selArgs)(K), ...headArgs)).toEqual(expected);
+      }));
   });
 });

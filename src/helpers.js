@@ -25,7 +25,7 @@ export function pickHeadUntilNullish(arr) {
 
 /**
  *
- * @param {...string} args
+ * @param {...(string|number)} args
  * @return {function(string): T}
  */
 export function prepareTestId(...args) {
@@ -34,8 +34,8 @@ export function prepareTestId(...args) {
 
 /**
  *
- * @param {...string} args
- * @return {function(function(string):P): function(...string): P}
+ * @param {...(string|number)} args
+ * @return {function(function(string):P): function(...(string|number)): P}
  */
 export function prepareTestIdOpen(...args) {
   return fn => (...args2) => {
@@ -236,3 +236,19 @@ export function applyForEachPair(obj, fn) {
       ([ k, v ]) => [ k, typeof v === 'function' ? v(fn) : v ]));
 }
 
+/**
+ *
+ * @param { string } sel
+ * @param {...(string|number)} headArgs
+ * @return {Array<string>}
+ */
+export function selectorTailToArgs(sel, ...headArgs) {
+  const headSel = produceTestIdAttrValue(headArgs);
+  if (sel.startsWith(headSel)) {
+    const result = sel.replace(headSel, '').replace(/\|$/, '');
+    if (result) {
+      return result.split('|');
+    }
+  }
+  return [];
+}
