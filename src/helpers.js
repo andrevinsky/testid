@@ -178,6 +178,15 @@ export class CssSel {
   }
 
   /**
+   * add a `not` modifier for a selector
+   * @param sel
+   * @return {CssSel}
+   */
+  not(sel) {
+    return new CssSel('', this, '').mod(`:not(${ sel })`);
+  }
+
+  /**
    *
    * @param { string } attrName
    * @param { string|number } [attrValue]

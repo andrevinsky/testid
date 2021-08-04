@@ -138,6 +138,7 @@ describe(`testid-support`, () => {
     describe(`relationship methods`, () => {
       [
         [ sel => sel.mod('.class'), '*.class', 'modification of the same node' ],
+        [ sel => sel.not('.class'), '*:not(.class)', 'modification of the same node, negative' ],
         [ sel => sel.mod('.class1').mod('.class2'), '*.class1.class2', 'modification of the same node (twice)' ],
         [ sel => sel.mod('.class1').or('.class2'), '*.class1,.class2', 'modification of the same node or another selector' ],
         [ sel => sel.mod('.class1').second(), '*.class1 ~ *.class1', 'second of such selector' ],
