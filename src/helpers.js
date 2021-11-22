@@ -1,5 +1,6 @@
 export const FOR_TESTS = 'test';
 export const FOR_RENDER = 'render';
+export const FOR_TESTIDS = 'testids';
 export const FOR_TEST_SVG = 'testSvg';
 export const FOR_RENDER_SVG = 'renderSvg';
 
@@ -91,6 +92,10 @@ export function makeE2eSelector(attr) {
   };
 }
 
+export function makeTestidValue() {
+  return sel => sel;
+}
+
 export const e2eSelector = makeE2eSelector('data-testid');
 
 // https://gist.github.com/getify/3667624
@@ -106,6 +111,7 @@ export function escapeDQuote(str) {
 
 const implMap = {
   [ FOR_TESTS ]: e2eSelector,
+  [ FOR_TESTIDS ]: makeTestidValue(),
   [ FOR_RENDER ]: e2eAttr,
   [ FOR_TEST_SVG ]: makeE2eSelector('aria-label'),
   [ FOR_RENDER_SVG ]: makeE2eAttr('aria-label')
@@ -114,7 +120,7 @@ const implMap = {
 /**
  *
  * @param {function(function(...string): function(arg:string): T, ?function(...string):function(function(string):P): function(...string): P):} cb
- * @return {function('test'|'render'): Object<string, T|P>|T|P}
+ * @return {function('test'|'render'|'testids'): Object<string, T|P>|T|P}
  */
 export const defineTestIdDictionary =
   cb =>

@@ -30,4 +30,5 @@ const defaultExport = Object.assign(defineTestIdDictionary, {
   cssSel,
   selectorTailToArgs
 });
+
 export default defaultExport;

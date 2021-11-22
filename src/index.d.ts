@@ -8,7 +8,7 @@ import { cssSel } from "./helpers";
 import { selectorTailToArgs } from "./helpers";
 import { appendSelector } from "./helpers";
 import { appendAttrValue } from "./helpers";
-declare const defaultExport: ((cb: (arg0: (...arg0: string[]) => (arg0: any, arg1: string) => any, arg1: (...arg0: string[]) => (arg0: (arg0: string) => any) => (...arg0: string[]) => any) => any) => (arg0: "test" | "render") => any) & {
+declare const defaultExport: ((cb: (arg0: (...arg0: string[]) => (arg0: arg, arg1: string) => any, arg1: (...arg0: string[]) => (arg0: (arg0: string) => any) => (...arg0: string[]) => any) => any) => (arg0: "test" | "render" | "testids") => any) & {
     FOR_RENDER: string;
     FOR_TESTS: string;
     FOR_TEST_SVG: string;

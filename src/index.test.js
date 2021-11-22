@@ -1,3 +1,4 @@
+import { FOR_TESTIDS } from './helpers';
 import {
   appendAttrValue,
   appendSelector,
@@ -10,6 +11,7 @@ import {
   prepareTestIdOpen,
   selectorTailToArgs
 } from './helpers';
+
 import { FOR_RENDER, FOR_TESTS, } from './index';
 
 describe(`testid-support`, () => {
@@ -99,14 +101,37 @@ describe(`testid-support`, () => {
   });
 
   describe(`defineTestIdDictionary((testId, testIdFn) => ({}))`, () => {
-    [ FOR_RENDER, FOR_TESTS ].map((testOrRuntime, idx0) => {
+    [ FOR_RENDER, FOR_TESTS, FOR_TESTIDS ].map((testOrRuntime, idx0) => {
       return [
-        [ [], [ { 'data-testid': '' }, '[data-testid=""]' ], 'No args' ],
-        [ [ 'modal' ], [ { 'data-testid': 'modal|' }, '[data-testid^="modal|"]' ], 'single arg' ],
-        [ [ 'modal', 'alert' ], [ { 'data-testid': 'modal|alert|' }, '[data-testid^="modal|alert|"]' ], 'two args' ],
-        [ [ 'modal', 'alert', null ], [ { 'data-testid': 'modal|alert|' }, '[data-testid^="modal|alert|"]' ], 'three args with null in the end' ],
-        [ [ 'modal', null, 'alert' ], [ { 'data-testid': 'modal|' }, '[data-testid^="modal|"]' ], 'three args with null in the middle' ],
-        [ [ null, 'modal', 'alert' ], [ { 'data-testid': '' }, '[data-testid=""]' ], 'three args with null at the start' ],
+        [ [], [ 
+          { 'data-testid': '' }, 
+          '[data-testid=""]', 
+          '' ], 'No args' ],
+        [ [ 'modal' ], [ 
+          { 'data-testid': 'modal|' }, 
+          '[data-testid^="modal|"]',
+          'modal|'
+         ], 'single arg' ],
+        [ [ 'modal', 'alert' ], [ 
+          { 'data-testid': 'modal|alert|' }, 
+          '[data-testid^="modal|alert|"]',
+          'modal|alert|'
+         ], 'two args' ],
+        [ [ 'modal', 'alert', null ], [ 
+          { 'data-testid': 'modal|alert|' }, 
+          '[data-testid^="modal|alert|"]',
+          'modal|alert|'
+         ], 'three args with null in the end' ],
+        [ [ 'modal', null, 'alert' ], [ 
+          { 'data-testid': 'modal|' }, 
+          '[data-testid^="modal|"]',
+          'modal|'
+         ], 'three args with null in the middle' ],
+        [ [ null, 'modal', 'alert' ], [ 
+          { 'data-testid': '' }, 
+          '[data-testid=""]',
+          ''
+         ], 'three args with null at the start' ],
       ].filter(Boolean).map(([ args, expectedChoice, msg ], idx) =>
         test(`#${ 1 + idx }. ${ msg } `, () => {
           expect(defineTestIdDictionary(
