@@ -11,7 +11,7 @@ import {
   prepareTestIdOpen,
   selectorTailToArgs
 } from './helpers';
-
+ 
 import { FOR_RENDER, FOR_TESTS, } from './index';
 
 describe(`testid-support`, () => {
